@@ -3,7 +3,7 @@ import re
 
 
 def to_snake_case(text):
-    text = re.sub('[\.]', '_', text)
+    text = re.sub('[\.\-]', '_', text)
     text = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', text)
     return re.sub('([a-z0-9])([A-Z])', r'\1_\2', text).lower()
 
@@ -44,6 +44,11 @@ def to_dot_case(text):
     return re.sub("_", ".", text)
 
 
+def to_dash_case(text):
+    text = to_snake_case(text)
+    return re.sub("_", "-", text)
+
+
 def run_on_selections(view, edit, func):
     for s in view.sel():
         region = view.word(s)
@@ -69,3 +74,8 @@ class ConvertToPascal(sublime_plugin.TextCommand):
 class ConvertToDot(sublime_plugin.TextCommand):
     def run(self, edit):
         run_on_selections(self.view, edit, to_dot_case)
+
+
+class ConvertToDash(sublime_plugin.TextCommand):
+    def run(self, edit):
+        run_on_selections(self.view, edit, to_dash_case)

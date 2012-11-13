@@ -14,5 +14,9 @@
 	{
 	    "caption": "Convert Case: dot.case",
 	    "command": "convert_to_dot"
+	},
+	{
+	    "caption": "Convert Case: dash-case",
+	    "command": "convert_to_dash"
 	}
 ]
