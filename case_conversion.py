@@ -3,8 +3,9 @@ import re
 
 
 def to_snake_case(text):
-    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', text)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+    text = re.sub('[\.]', '_', text)
+    text = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', text)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', text).lower()
 
 
 def strip_wrapping_underscores(text):
@@ -25,13 +26,12 @@ def get_indexes(text, char):
 
 
 def to_pascal_case(text):
-    if "_" in text:
-        callback = lambda pat: pat.group(1).lower() + pat.group(2).upper()
-        text = re.sub("(\w)_(\w)", callback, text)
-        if text[0].islower():
-            text = text[0].upper() + text[1:]
-        return text
-    return text[0].upper() + text[1:]
+    text = to_snake_case(text)
+    callback = lambda pat: pat.group(1).lower() + pat.group(2).upper()
+    text = re.sub("(\w)_(\w)", callback, text)
+    if text[0].islower():
+        text = text[0].upper() + text[1:]
+    return text
 
 
 def to_camel_case(text):
